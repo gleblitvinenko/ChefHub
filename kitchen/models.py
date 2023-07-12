@@ -11,7 +11,7 @@ class DishType(models.Model):
 
 class Cook(AbstractUser):
     years_of_experience = models.IntegerField(
-        null=True
+        default=0
     )
 
     class Meta:
@@ -27,7 +27,9 @@ class Dish(models.Model):
         max_length=255,
         unique=True
     )
-    description = models.TextField()
+    description = models.TextField(
+        blank=True
+    )
     price = models.DecimalField(
         max_digits=5,
         decimal_places=2
@@ -39,7 +41,8 @@ class Dish(models.Model):
     )
     cooks = models.ManyToManyField(
         Cook,
-        related_name="dishes"
+        related_name="dishes",
+        blank=True
     )
 
     class Meta:
