@@ -45,17 +45,14 @@
                         </div>
                         Landing Pages
                       </h6>
-                      <a href="#" class="dropdown-item border-radius-md">
-                        All authors
+                      <a href="{% url 'kitchen:dish_type_list' %}" class="dropdown-item border-radius-md">
+                        All dish types
                       </a>
-                      <a href="#" class="dropdown-item border-radius-md">
-                        All books
+                      <a href="{% url 'kitchen:dish_list' %}" class="dropdown-item border-radius-md">
+                        All dishes
                       </a>
-                      <a href="#" class="dropdown-item border-radius-md">
-                        All genres
-                      </a>
-                      <a href="#" class="dropdown-item border-radius-md">
-                        All publications
+                      <a href="{% url 'kitchen:cook_list' %}" class="dropdown-item border-radius-md">
+                        All cooks
                       </a>
                       <h6 class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center px-0 mt-3">
                         <div class="d-inline-block">
@@ -77,12 +74,12 @@
                         </div>
                         Account
                       </h6>
-                      <a href="#" class="dropdown-item border-radius-md">
+                      <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
                         Sign In
                       </a>
                     </div>
                     <li class="nav-item ms-lg-auto">
-                      <a class="nav-link nav-link-icon me-2" href="#">
+                      <a class="nav-link nav-link-icon me-2" href="{% url 'logout' %}">
                         <i class="fa fa-sign-out me-1"></i>
                         <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout">Logout</p>
                       </a>
