@@ -2,4 +2,8 @@
 
 {% block content %}
   <h1>Main page</h1>
+  <p>{{ num_cooks }} Cooks</p>
+  <p>{{ num_dishes }} Dishes</p>
+  <p>{{ num_dish_types }} Dish types</p>
+  <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}</p>
 {% endblock %}
