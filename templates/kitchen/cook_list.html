@@ -1,4 +1,64 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
+
 {% block content %}
-  <h1>Cook</h1>
+  <section class="pt-3 pb-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">Cook</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="text-center mt-2">
+            <a href="{% url 'kitchen:cook_create' %}" class="btn btn-primary link-to-page">
+              Create
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <form action="" method="get" class="form-inline">
+            {{ search_form|crispy }}
+            <input class="btn btn-secondary" type="submit" value="🔎">
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            {% if cook_list %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Years of experience</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for cook in cook_list %}
+                    <tr>
+                      <td>{{ cook.id }}</td>
+                      <td><a href="{% url 'kitchen:cook_detail' pk=cook.id %}" class="btn btn-behance">{{ cook.username }}</a></td>
+                      <td>{{ cook.first_name}}</td>
+                      <td>{{ cook.last_name }}</td>
+                      <td>{{ cook.years_of_experience }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>There are no cooks in the kitchen.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

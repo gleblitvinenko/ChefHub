@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-6">
+    <h1 class="text-center text-uppercase">
+      {{ cook.username }}
+    </h1>
+    <div class="d-flex justify-content-center gap-5">
+      <a href="{% url 'kitchen:cook_update' pk=cook.id %}" class="btn btn-secondary link-to-page">
+        Update years of experience
+      </a>
+      <a href="{% url 'kitchen:cook_delete' pk=cook.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
+    </div>
+
+    <div class="table-responsive mt-4">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Username:</th>
+            <td>{{ cook.username }}</td>
+          </tr>
+          <tr>
+            <th>First name</th>
+            <td>{{ cook.first_name }}</td>
+          </tr>
+          <tr>
+            <th>Last name</th>
+            <td>{{ cook.last_name }}</td>
+          </tr>
+            <tr>
+              <th>Years of experience:</th>
+              <td>{{ cook.years_of_experience }}</td>
+            </tr>
+            <tr class="border-top">
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h1 class="text-center">Dishes</h1>
+
+  {% if cook.dishes.all %}
+    <div class="table-responsive mt-4">
+      <table class="table">
+        <tbody>
+          {% for dish in cook.dishes.all %}
+          <tr>
+            <th>Name</th>
+            <td>{{ dish.name }}</td>
+          </tr>
+          <tr>
+            <th>Dish type</th>
+            <td>{{ dish.dish_type }}</td>
+          </tr>
+          <tr>
+            <th>Price</th>
+            <td>{{ dish.price }}</td>
+          </tr>
+              {% if dish.description %}
+                <tr>
+                  <th>Description</th>
+                  <td>{{ dish.description }}</td>
+                </tr>
+                {% else %}
+                  <tr>
+                    <th>Description</th>
+                    <td>Dish has no description</td>
+                  </tr>
+              {% endif %}
+            <tr class="border-top">
+            </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-danger text-center">Cook has no  dishes</p>
+  {% endif %}
+  </div>
+{% endblock %}
