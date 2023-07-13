@@ -1,6 +1,6 @@
 {% load query_transform %}
 {% if is_paginated %}
-  <ul class="pagination">
+  <ul class="pagination pagination-primary">
 
     {% if page_obj.has_previous %}
       <li class="page-item">
@@ -9,7 +9,7 @@
     {% endif %}
 
     <li class="page-item active">
-    <a class="page-link text-white">{{ page_obj.number }} of {{ paginator.num_pages }}</a>
+    <a class="page-link text-white" style="width: 100%">{{ page_obj.number }} of {{ paginator.num_pages }}</a>
     </li>
 
     {% if page_obj.has_next %}

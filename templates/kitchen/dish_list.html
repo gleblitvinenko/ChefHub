@@ -1,73 +1,72 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
+
 {% block content %}
-  <section class="pt-3 pb-4">
+  <section class="pt-3 pb-4 mt-5">
     <div class="container">
       <div class="row">
         <div class="col-12">
-           <h1 class="text-center">Dish </h1>
+          <h1 class="text-center">Dish</h1>
         </div>
+      </div>
+      <div class="row">
         <div class="col-12">
-            <div class="text-center mt-2">
-              <a href="{% url 'kitchen:dish_create' %}" class="btn btn-primary link-to-page">
-                  Create
-              </a>
-            </div>
+          <div class="text-center mt-2">
+            <a href="{% url 'kitchen:dish_create' %}" class="btn btn-primary link-to-page">
+              Create
+            </a>
+          </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-12">
-            <form action="" method="get" class="form-inline">
+          <form action="" method="get" class="form-inline">
             {{ search_form|crispy }}
-              <input class="btn btn-secondary" type="submit" value="🔎">
-            </form>
+            <input class="btn btn-secondary" type="submit" value="🔎">
+          </form>
         </div>
       </div>
 
       <div class="row">
         <div class="col-12">
+          <div class="table-responsive">
             {% if dish_list %}
               <table class="table">
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Price</th>
-                  <th>Update</th>
-                  <th>Delete</th>
-                </tr>
-
-                {% for dish in dish_list %}
+                <thead>
                   <tr>
-                    <td>
-                      {{ dish.id }}
-                    </td>
-                    <td>
-                      {{ dish.name }}
-                    </td>
-                    <td>
-                      {{ dish.dish_type.name }}
-                    </td>
-                    <td>
-                      {{ dish.price }}
-                    </td>
-                    <td>
-                      <a class="btn btn-primary"
-                         href="{% url 'kitchen:dish_update' pk=dish.id %}">
-                        Update
-                      </a>
-                    </td>
-                    <td>
-                      <a class="btn btn-danger"
-                        href="{% url "kitchen:dish_delete" pk=dish.id%}">
-                        Delete
-                      </a>
-                    </td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                   </tr>
-                {% endfor %}
+                </thead>
+                <tbody>
+                  {% for dish in dish_list %}
+                    <tr>
+                      <td>{{ dish.id }}</td>
+                      <td>{{ dish.name }}</td>
+                      <td>{{ dish.dish_type.name }}</td>
+                      <td>{{ dish.price }}</td>
+                      <td>
+                        <a class="btn btn-primary" href="{% url 'kitchen:dish_update' pk=dish.id %}">
+                          Update
+                        </a>
+                      </td>
+                      <td>
+                        <a class="btn btn-danger" href="{% url 'kitchen:dish_delete' pk=dish.id %}">
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
               </table>
-
             {% else %}
-                <p>There are no dishes at the kitchen.</p>
+              <p>There are no dishes in the kitchen.</p>
             {% endif %}
+          </div>
         </div>
       </div>
     </div>
