@@ -45,7 +45,7 @@
                 <tbody>
                   {% for dish in dish_list %}
                     <tr>
-                      <td>{{ dish.id }}</td>
+                      <td><a href="{% url 'kitchen:dish_detail' pk=dish.id %}" class="btn btn-behance">{{ dish.id }}</a></td>
                       <td>{{ dish.name }}</td>
                       <td>{{ dish.dish_type.name }}</td>
                       <td>{{ dish.price }}</td>

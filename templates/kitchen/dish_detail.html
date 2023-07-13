@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-6">
+    <h1 class="text-center">
+      {{ dish.name }}
+    </h1>
+    <div class="d-flex justify-content-center gap-5">
+      <a href="{% url 'kitchen:dish_update' pk=dish.id %}" class="btn btn-secondary link-to-page">
+        Update
+      </a>
+      <a href="{% url 'kitchen:dish_delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
+    </div>
+
+    <div class="table-responsive mt-4">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Name:</th>
+            <td>{{ dish.name }}</td>
+          </tr>
+          <tr>
+            <th>Dish type:</th>
+            <td>{{ dish.dish_type.name }}</td>
+          </tr>
+          <tr>
+            <th>Price:</th>
+            <td>{{ dish.price }}</td>
+          </tr>
+          {% if dish.description %}
+            <tr>
+              <th>Description:</th>
+              <td>{{ dish.description }}</td>
+            </tr>
+            <tr class="border-top">
+            </tr>
+          {% else %}
+            <tr>
+              <th>Description:</th>
+              <td>No description provided</td>
+            </tr>
+            <tr class="border-top">
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <h1 class="text-center">Cooks</h1>
+    {% if dish in user.dishes.all %}
+      <div class="d-flex justify-content-center">
+        <a href="{% url 'kitchen:toggle_dish_assign' pk=dish.id %}" class="btn btn-danger link-to-page">
+          Delete me from this dish
+        </a>
+      </div>
+    {% else %}
+      <div class="d-flex justify-content-center">
+        <a href="{% url 'kitchen:toggle_dish_assign' pk=dish.id %}" class="btn btn-success link-to-page">
+          Assign me to this dish
+        </a>
+      </div>
+    {% endif %}
+
+    <hr>
+  {% if dish.cooks.all %}
+      <ul>
+      {% for cook in dish.cooks.all %}
+        <li>{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }})</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-danger text-center">Dish has no cooks</p>
+  {% endif %}
+
+  </div>
+{% endblock %}
