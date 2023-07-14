@@ -10,7 +10,7 @@ class DishSearchForm(forms.Form):
         max_length=255,
         required=False,
         label="",
-        widget=forms.TextInput(attrs={"placeholder":  "Search by dish name..."}),
+        widget=forms.TextInput(attrs={"placeholder": "Search by dish name..."}),
     )
 
 
@@ -19,7 +19,7 @@ class DishTypeSearchForm(forms.Form):
         max_length=255,
         required=False,
         label="",
-        widget=forms.TextInput(attrs={"placeholder":  "Search by dish type name..."}),
+        widget=forms.TextInput(attrs={"placeholder": "Search by dish type name..."}),
     )
 
 
@@ -28,7 +28,7 @@ class CookSearchForm(forms.Form):
         max_length=255,
         required=False,
         label="",
-        widget=forms.TextInput(attrs={"placeholder":  "Search by cook username..."}),
+        widget=forms.TextInput(attrs={"placeholder": "Search by cook username..."}),
     )
 
 
@@ -57,6 +57,7 @@ class CookCreationForm(UserCreationForm):
 def validate_years_of_experience(
     years_of_experience,
 ):  # regex validation is also possible here
-    if not years_of_experience.isdigit():
+    if not isinstance(years_of_experience, int):
+        print(type(years_of_experience), years_of_experience)
         ValidationError("Years of experience should be a number")
     return years_of_experience

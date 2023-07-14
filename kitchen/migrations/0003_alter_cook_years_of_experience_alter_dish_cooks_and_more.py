@@ -5,25 +5,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('kitchen', '0002_alter_cook_years_of_experience'),
+        ("kitchen", "0002_alter_cook_years_of_experience"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='cook',
-            name='years_of_experience',
+            model_name="cook",
+            name="years_of_experience",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='dish',
-            name='cooks',
-            field=models.ManyToManyField(blank=True, related_name='dishes', to=settings.AUTH_USER_MODEL),
+            model_name="dish",
+            name="cooks",
+            field=models.ManyToManyField(
+                blank=True, related_name="dishes", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AlterField(
-            model_name='dish',
-            name='description',
+            model_name="dish",
+            name="description",
             field=models.TextField(blank=True),
         ),
     ]
