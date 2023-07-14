@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <section class="pt-3 pb-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">Dish type</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="text-center mt-2">
+            <a href="{% url 'kitchen:dish_type_create' %}" class="btn btn-primary link-to-page">
+              Create
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <form action="" method="get" class="form-inline">
+            {{ search_form|crispy }}
+            <input class="btn btn-secondary" type="submit" value="🔎">
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            {% if dishtype_list %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for dish_type in dishtype_list %}
+                    <tr>
+                      <td><span>{{ dish_type.id }}</span></td>
+                      <td>{{ dish_type.name }}</td>
+                      <td>
+                        <a class="btn btn-primary" href="{% url 'kitchen:dish_type_update' pk=dish_type.id %}">
+                          Update
+                        </a>
+                      </td>
+                      <td>
+                        <a class="btn btn-danger" href="{% url 'kitchen:dish_type_delete' pk=dish_type.id %}">
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>There are no dish types in the kitchen.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
