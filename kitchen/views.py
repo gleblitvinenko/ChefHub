@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views import generic
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
+from django.views import generic, View
 
 from kitchen.forms import (
     DishSearchForm,
@@ -16,21 +15,22 @@ from kitchen.forms import (
 from kitchen.models import Cook, Dish, DishType
 
 
-def index(request):
-    num_cooks = Cook.objects.count()
-    num_dishes = Dish.objects.count()
-    num_dish_types = DishType.objects.count()
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
+class IndexView(View):
+    def get(self, request):
+        num_cooks = Cook.objects.count()
+        num_dishes = Dish.objects.count()
+        num_dish_types = DishType.objects.count()
+        num_visits = request.session.get("num_visits", 0)
+        request.session["num_visits"] = num_visits + 1
 
-    context = {
-        "num_cooks": num_cooks,
-        "num_dishes": num_dishes,
-        "num_dish_types": num_dish_types,
-        "num_visits": num_visits + 1,
-    }
+        context = {
+            "num_cooks": num_cooks,
+            "num_dishes": num_dishes,
+            "num_dish_types": num_dish_types,
+            "num_visits": num_visits + 1,
+        }
 
-    return render(request, "kitchen/index.html", context=context)
+        return render(request, "kitchen/index.html", context=context)
 
 
 class DishTypeListView(LoginRequiredMixin, generic.ListView):
@@ -157,11 +157,14 @@ class CookDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Cook.objects.prefetch_related("dishes")
 
 
-@login_required
-def toggle_assign_to_dish(request, pk):
-    cook = Cook.objects.get(id=request.user.id)
-    if Dish.objects.get(id=pk) in cook.dishes.all():
-        cook.dishes.remove(pk)
-    else:
-        cook.dishes.add(pk)
-    return HttpResponseRedirect(reverse_lazy("kitchen:dish_detail", args=[pk]))
+class ToggleAssignToDishView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        cook = Cook.objects.get(id=request.user.id)
+        dish = get_object_or_404(Dish, id=pk)
+
+        if dish in cook.dishes.all():
+            cook.dishes.remove(dish)
+        else:
+            cook.dishes.add(dish)
+
+        return HttpResponseRedirect(reverse("kitchen:dish_detail", args=[pk]))
