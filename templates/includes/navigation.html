@@ -74,16 +74,21 @@
                         </div>
                         Account
                       </h6>
-                      <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
-                        Sign In
-                      </a>
+                      {% if user.is_authenticated %}
+                        <a class="dropdown-item border-radius-md" href="{% url 'kitchen:cook_detail' pk=user.id %}">{{ user.username }}</a>
+                        <a class="dropdown-item border-radius-md" href="{% url 'logout'%}">Logout</a>
+                      {% else %}
+                        <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
+                          Login
+                        </a>
+                      {% endif %}
                     </div>
-                    <li class="nav-item ms-lg-auto">
-                      <a class="nav-link nav-link-icon me-2" href="{% url 'logout' %}">
-                        <i class="fa fa-sign-out me-1"></i>
-                        <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout">Logout</p>
-                      </a>
-                    </li>
+{#                    <li class="nav-item ms-lg-auto">#}
+{#                      <a class="nav-link nav-link-icon me-2" href="{% url 'logout' %}">#}
+{#                        <i class="fa fa-sign-out me-1"></i>#}
+{#                        <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout">Logout</p>#}
+{#                      </a>#}
+{#                    </li>#}
                   </div>
                 </ul>
             </div>
