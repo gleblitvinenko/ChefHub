@@ -158,7 +158,7 @@ class CookDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class ToggleAssignToDishView(LoginRequiredMixin, View):
-    def get(self, request, pk):
+    def post(self, request, pk):
         cook = Cook.objects.get(id=request.user.id)
         dish = get_object_or_404(Dish, id=pk)
 

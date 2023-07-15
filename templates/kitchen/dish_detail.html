@@ -49,19 +49,21 @@
     </div>
 
     <h1 class="text-center">Cooks</h1>
-    {% if dish in user.dishes.all %}
+    <form method="post" action="{% url 'kitchen:toggle_dish_assign' pk=dish.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="task_id" value="{{ task.id }}">
       <div class="d-flex justify-content-center">
-        <a href="{% url 'kitchen:toggle_dish_assign' pk=dish.id %}" class="btn btn-danger link-to-page">
-          Delete me from this dish
-        </a>
+        <button type="submit" class="btn btn-warning">
+
+          {% if dish in user.dishes.all %}
+                Delete me from this dish
+          {% else %}
+                Assign me to this dish
+          {% endif %}
+
+        </button>
       </div>
-    {% else %}
-      <div class="d-flex justify-content-center">
-        <a href="{% url 'kitchen:toggle_dish_assign' pk=dish.id %}" class="btn btn-success link-to-page">
-          Assign me to this dish
-        </a>
-      </div>
-    {% endif %}
+    </form>
 
     <hr>
   {% if dish.cooks.all %}
